@@ -1,17 +1,6 @@
 ///<reference path="../../../headers/common.d.ts" />
 System.register(['lodash', 'app/core/utils/datemath'], function(exports_1) {
     var lodash_1, dateMath;
-    /** fixed openfalcon query **/
-    function FixTargets(targets) {
-      return _.map(targets, function(obj){
-        if( obj.target && obj.target != "" && obj.target.match(/\./) ){
-            obj.target = obj.target.replace(/\./g, "#");
-            //fix ip back to the right foramt ex. 10#10#10#10 -> 10.10.10.10
-            obj.target = obj.target.replace(/(\d+)#(\d+)#(\d+)#(\d+)/g,"$1.$2.$3.$4");
-        }
-        return obj;
-      })
-    }
     /** @ngInject */
     function OpenfalconDatasource(instanceSettings, $q, backendSrv, templateSrv) {
         this.basicAuth = instanceSettings.basicAuth;
@@ -24,7 +13,7 @@ System.register(['lodash', 'app/core/utils/datemath'], function(exports_1) {
             var graphOptions = {
                 from: this.translateTime(options.rangeRaw.from, false),
                 until: this.translateTime(options.rangeRaw.to, true),
-                targets: FixTargets(options.targets),
+                targets: options.targets,
                 format: options.format,
                 cacheTimeout: options.cacheTimeout || this.cacheTimeout,
                 maxDataPoints: options.maxDataPoints,
@@ -234,7 +223,7 @@ System.register(['lodash', 'app/core/utils/datemath'], function(exports_1) {
                     continue;
                 }
                 targetValue = targets[target.refId];
-                // this will brken upcase metric during query, so I just mark it to solve this kind of porblem. 
+                // this will brken upcase metric during query, so I just mark it to solve this kind of porblem.
                 // targetValue = targetValue.replace(regex, nestedSeriesRegexReplacer);
                 targets[target.refId] = targetValue;
                 if (!target.hide) {
