@@ -54,7 +54,7 @@ System.register(['lodash', 'app/core/utils/datemath'], function(exports_1) {
                      });
                      obj = {};
                      obj.datapoints = datapoints;
-                     obj.target = host + '.' + metric;
+                     obj.target = [host, metric].filter((e) => e!=='').join('.');
                      data.push(obj);
                 }
             });
