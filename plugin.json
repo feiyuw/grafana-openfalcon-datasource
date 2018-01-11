@@ -1,7 +1,7 @@
 {
   "name": "Open-Falcon",
   "type": "datasource",
-  "id": "fastweb-openfalcon-datasource",
+  "id": "grafana-openfalcon-datasource",
 
   "includes": [ ],
 
