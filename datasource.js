@@ -56,14 +56,18 @@ System.register(['lodash', 'app/core/utils/datemath'], function(exports_1) {
                      obj.datapoints = datapoints;
                      obj.target = [host, metric].filter((e) => e!=='').join('.');
                      data.push(obj);
+                } else {
+                  data.push(row); // use raw data
                 }
             });
             result.data = data;
             if (!result || !result.data) { return []; }
             for (var i = 0; i < result.data.length; i++) {
                 var series = result.data[i];
-                for (var y = 0; y < series.datapoints.length; y++) {
-                    series.datapoints[y][1] *= 1000;
+                if ('datapoints' in series) {
+                  for (var y = 0; y < series.datapoints.length; y++) {
+                      series.datapoints[y][1] *= 1000;
+                  }
                 }
             }
             return result;
